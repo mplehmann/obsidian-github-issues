@@ -1,8 +1,99 @@
-/*
+.gh-wrapper {
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    line-height: 1.5;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.gh-wrapper a {
+    text-decoration: none;
+    color: inherit;
+}
 
-If your plugin does not need CSS, delete this file.
+.gh-wrapper a:hover {
+    text-decoration: underline;
+    color: inherit;
+}
 
-*/
+.gh-wrapper a:visited {
+    color: inherit;
+}
+
+.gh-segment {
+    font-size: 0.75em;
+    padding: 0.1em 0.3em;
+}
+
+.gh-segment:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 0;
+}
+
+.gh-segment:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.gh-segment svg {
+    padding-right: 0.2em;
+    --icon-size: var(--icon-m);
+}
+
+.gh-leader {
+    min-width: 3px;
+    background: #000;
+    color: #fff;
+}
+
+.gh-leader.gh-icon {
+    padding: 0 0.1em 0 0.2em;
+}
+
+.gh-id {
+    background-color: var(--color-blue);
+    color: var(--text-on-accent);
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.gh-user-name, .gh-repo-name, .gh-issue-title {
+    background: var(--text-color-base-30);
+    color: var(--text-normal);
+}
+
+.gh-issue-draft {
+    background: var(--text-muted);
+    color: var(--text-on-accent);
+}
+
+.gh-issue-open {
+    background: var(--color-blue);
+    color: var(--text-on-accent);
+}
+
+.gh-issue-closed {
+    background: var(--text-success);
+    color: var(--text-on-accent);
+}
+
+.gh-issue-cancelled {
+    background: var(--color-red);
+    color: var(--text-on-accent);
+}
+
+.gh-error-value {
+    background: var(--text-error);
+    color: var(--text-on-accent);
+}
+
+.gh-error-message {
+    background: var(--text-faint);
+    color: var(--text-on-accent);
+}
+
+.gh-icon {
+    display: inline-flex;
+    align-items: center;
+}

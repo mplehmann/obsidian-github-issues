@@ -1,25 +1,32 @@
 import {Plugin} from 'obsidian';
-import {DEFAULT_SETTINGS} from "./settings/defaults";
-import {IGithubIssuesSettings} from "./settings/interfaces";
 import {GithubIssuesSettingsTab} from "./settings/main";
+import {InlineIssuePostProcessor} from "./inline/main";
+import {Client} from "./github-client/main";
+import {GitHubViewPluginManager} from "./rendering/inlineEditorPlugin";
 
 export default class GithubIssuesPlugin extends Plugin {
-    settings: IGithubIssuesSettings;
+    private _settingsTab: GithubIssuesSettingsTab | null;
+    private _editorPluginManager: GitHubViewPluginManager | null;
 
     async onload() {
-        await this.loadSettings();
-        this.addSettingTab(new GithubIssuesSettingsTab(this.app, this));
+        this._settingsTab = new GithubIssuesSettingsTab(this.app, this);
+        await this._settingsTab.loadSettings();
+        this._settingsTab.onChange(() => {
+            if (this._editorPluginManager) { this._editorPluginManager.update(); }
+            Client.clearCache();
+        });
+        this.addSettingTab(this._settingsTab);
+        Client.reauthenticate();
+
+        // Inline issues
+        this.registerMarkdownPostProcessor(InlineIssuePostProcessor);
+        this._editorPluginManager = new GitHubViewPluginManager();
+        this.registerEditorExtension(this._editorPluginManager.getViewPlugin());
     }
 
     onunload() {
-
-    }
-
-    async loadSettings() {
-        this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-    }
-
-    async saveSettings() {
-        await this.saveData(this.settings);
+        this._settingsTab = null;
+        this._editorPluginManager = null;
+        Client.clearCache();
     }
 }
